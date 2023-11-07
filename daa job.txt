@@ -1,0 +1,18 @@
+jobs=[["J1",100,2],["J2",60,1],["J3",120,3],["J4",40,2]]
+def job_scheduling(jobs):
+    jobs.sort(key=lambda x:x[1] , reverse=True)
+    max_deadline=max(jobs, key=lambda x:x[2])[2]
+    time_slot=[False]*max_deadline
+    schedule=[None]*max_deadline
+    for job in jobs:
+        deadline=job[2]
+        while deadline>0:
+            if not time_slot[deadline-1]:
+                time_slot[deadline-1]=True
+                schedule[deadline-1]=job[0]
+                break
+            deadline-=1
+    return schedule
+
+xx=job_scheduling(jobs)
+print(xx)

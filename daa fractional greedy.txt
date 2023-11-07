@@ -1,0 +1,33 @@
+def fractional_knapsack(items, max_weight):
+    # Calculate the value-to-weight ratio for each item
+    items.sort(key=lambda x: x[1]/x[0], reverse=True)
+
+    total_value = 0
+    knapsack = []
+
+    for item in items:
+        if max_weight >= item[0]:
+            # Take the whole item
+            max_weight -= item[0]
+            total_value += item[1]
+            knapsack.append((item[0], item[1], 1))  # Fraction = 1 (whole item taken)
+        else:
+            # Take a fraction of the item
+            fraction = max_weight / item[0]
+            total_value += fraction * item[1]
+            knapsack.append((item[0], item[1], fraction))
+            break
+
+    return total_value, knapsack
+
+# Example usage
+items = [(10, 60), (20, 100), (30, 120)]
+max_weight = 50
+
+total_value, knapsack = fractional_knapsack(items, max_weight)
+
+print("Total value obtained:", total_value)
+print("Items taken in the knapsack:")
+# print(knapsack)
+for item in knapsack:
+    print(f"Weight: {item[0]}, Value: {item[1]}, Fraction taken: {item[2]}")
